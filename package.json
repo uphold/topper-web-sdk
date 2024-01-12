@@ -1,0 +1,66 @@
+{
+  "name": "@uphold/topper-web-sdk",
+  "version": "0.0.0",
+  "description": "Seamless integration of Topper on Web applications",
+  "author": "Uphold",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:uphold/topper-web-sdk.git"
+  },
+  "homepage": "https://github.com/uphold/topper-web-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/uphold/topper-web-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && tsup",
+    "lint": "eslint . --ext .ts,.js",
+    "prepare": "husky install",
+    "release": "release-it"
+  },
+  "dependencies": {
+    "query-string": "^6.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@uphold/github-changelog-generator": "^3.4.0",
+    "eslint-config-uphold": "^5.0.1",
+    "eslint": "~8.52.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^2.8.7",
+    "release-it": "^17.0.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "lint-staged": {
+    "*.{ts,js}": "yarn lint"
+  },
+  "keywords": [
+    "crypto",
+    "payment",
+    "ramp",
+    "sdk",
+    "topper",
+    "web"
+  ],
+  "types": "dist/index.d.ts"
+}
