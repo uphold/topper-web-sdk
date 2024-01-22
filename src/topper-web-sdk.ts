@@ -1,12 +1,12 @@
 import { Config } from './interfaces';
-import { Environments, Events, Urls, Variants } from './enums';
-import { EventHandler } from 'types';
+import { Environments, Events, Handlers, Sources, Urls, Variants } from './enums';
+import { EventHandler, Handler } from 'types';
+import isPromise from 'utils/isPromise';
 import queryString from 'query-string';
-
-const TOPPER_WEB_SDK_EVENT_SOURCE = '@topper-web-sdk';
 
 class TopperWebSdk {
   private eventHandlers: { [key in Events]?: EventHandler[] } = {};
+  private handlers: { [key in Handlers]?: Handler } = {};
   private handleMessage: ((event: MessageEvent) => void) | null = null;
   private isInitialized: boolean = false;
   private targetWindow: Window | null = null;
@@ -18,13 +18,39 @@ class TopperWebSdk {
       environment: Environments.PRODUCTION,
       is_android_app: false,
       is_ios_app: false,
+      use_assets: false,
       variant: Variants.NEW_TAB,
       ...config
     };
   }
 
+  static getMainWindow() {
+    return window.self !== window.top ? window.parent : window.opener;
+  }
+
+  static resolveHandler(handlerName: Handlers): Promise<void> {
+    const mainWindow = this.getMainWindow();
+
+    mainWindow.postMessage(
+      {
+        name: Events.RESOLVE_HANDLER,
+        payload: handlerName,
+        source: Sources.HANDLER
+      },
+      '*'
+    );
+
+    return new Promise(resolve => {
+      window.addEventListener('message', event => {
+        if (event.data.name === Events.RESOLVE_HANDLER && event.data.payload && event.data.source === Sources.HANDLER) {
+          resolve(event.data.payload);
+        }
+      });
+    });
+  }
+
   static triggerEvent(eventName: Events, data?: any): void {
-    const mainWindow = window.self !== window.top ? window.parent : window.opener;
+    const mainWindow = this.getMainWindow();
 
     if (!mainWindow) {
       return;
@@ -34,7 +60,7 @@ class TopperWebSdk {
       {
         name: eventName,
         payload: data,
-        source: TOPPER_WEB_SDK_EVENT_SOURCE
+        source: Sources.EVENT
       },
       '*'
     );
@@ -54,8 +80,12 @@ class TopperWebSdk {
         return;
       }
 
-      if (event.data.name && event.data.source === TOPPER_WEB_SDK_EVENT_SOURCE) {
+      if (event.data.name && event.data.source === Sources.EVENT) {
         this.triggerEvent(event.data.name as Events, event.data.payload);
+      }
+
+      if (event.data.name === Events.RESOLVE_HANDLER && event.data.payload && event.data.source === Sources.HANDLER) {
+        this.resolveHandler(event.data.payload as Handlers);
       }
     };
 
@@ -82,7 +112,8 @@ class TopperWebSdk {
       ...(isTopperSelfEmbed && { embed: 1 }),
       ...(this.config.theme && { theme: this.config.theme }),
       ...(this.config.is_android_app && { is_android_app: 1 }),
-      ...(this.config.is_ios_app && { is_ios_app: 1 })
+      ...(this.config.is_ios_app && { is_ios_app: 1 }),
+      ...(this.config.use_assets && { use_assets: 1 })
     };
 
     const url = queryString.stringifyUrl({ query: queryParams, url: `${baseUrl}/` });
@@ -111,6 +142,29 @@ class TopperWebSdk {
     }
 
     this.eventHandlers[eventName]?.push(handler);
+  }
+
+  registerHandler(handlerName: Handlers, handler: Handler): void {
+    if (!(typeof handler === 'function' || isPromise(handler))) {
+      throw new Error('Handler must be a Promise or an async function.');
+    }
+
+    this.handlers[handlerName] = handler;
+  }
+
+  async resolveHandler(handlerName: Handlers) {
+    const handler = this.handlers[handlerName];
+
+    const handlerResult = isPromise(handler) ? await handler : await handler?.();
+
+    this.targetWindow?.postMessage(
+      {
+        name: Events.RESOLVE_HANDLER,
+        payload: handlerResult,
+        source: Sources.HANDLER
+      },
+      '*'
+    );
   }
 }
 
