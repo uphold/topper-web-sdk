@@ -4,6 +4,7 @@ export {
   InitialScreens as TOPPER_INITIAL_SCREENS,
   Locales as TOPPER_LOCALES,
   Themes as TOPPER_THEMES,
+  Handlers as TOPPER_HANDLERS,
   Urls as TOPPER_URLS,
   Variants as TOPPER_VARIANTS
 } from './enums';

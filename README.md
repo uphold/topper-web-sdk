@@ -103,7 +103,45 @@ const topper = new TopperWebSdk();
 topper.on(TOPPER_EVENTS.ALL, ({ data, name }) => {});
 
 topper.initialize({ bootstrapToken: <bootstrap token> });
-``` 
+```
+
+### Triggering Events
+
+Used by `@uphold/topper-web` to trigger events:
+
+Trigger events:
+
+```javascript
+TopperWebSdk.triggerEvent(TOPPER_EVENTS.ORDER_PLACED, data);
+```
+
+### Handlers
+
+Custom handlers let you run custom logic within Topper or perform other operations that require interaction with your application.
+
+#### Registering Handlers
+
+```javascript
+import { TOPPER_HANDLERS, TopperWebSdk } from '@uphold/topper-web-sdk';
+
+const topper = new TopperWebSdk();
+
+topper.registerHandler(TOPPER_HANDLERS.SIGN_AND_BROADCAST_TRANSACTION, async (data) => {
+  const signature = await signTransaction(data);
+
+  return signature;
+});
+
+topper.initialize({ bootstrapToken: <bootstrap token> });
+```
+
+#### Resolving Handlers
+
+Used by `@uphold/topper-web` to resolve handlers:
+
+```javascript
+const result = await TopperWebSdk.handle(TOPPER_HANDLERS.SIGN_AND_BROADCAST_TRANSACTION, data);
+```
 
 ### Multiple instances
 
@@ -121,16 +159,6 @@ topperIframe2.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
 
 topperIframe1.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe1Element });
 topperIframe2.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe2Element });
-```
-
-### Triggering Events
-
-Used by `@uphold/topper-web` to trigger events:
-
-Trigger events:
-
-```javascript
-TopperWebSdk.triggerEvent(TOPPER_EVENTS.ORDER_PLACED, data);
 ```
 
 ## Issues
