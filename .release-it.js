@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   git: {
     changelog: 'echo "## Changelog\n\n$(npx @uphold/github-changelog-generator -f unreleased | tail -n +4 -f)"',
     commitMessage: 'Release ${version}',
@@ -20,3 +20,5 @@ module.exports = {
     publish: true
   }
 };
+
+export default config;
