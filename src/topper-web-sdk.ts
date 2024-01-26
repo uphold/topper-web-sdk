@@ -46,6 +46,10 @@ class TopperWebSdk {
     this.eventHandlers[name]?.forEach(handler => handler({ data: payload }));
   }
 
+  private setConfig(config: Config): void {
+    this.config = { ...this.config, ...config };
+  }
+
   private initializeMessageListener(): void {
     this.handleMessage = (event: MessageEvent) => {
       const allowedOrigins = [Urls.PRODUCTION, Urls.SANDBOX];
@@ -67,12 +71,21 @@ class TopperWebSdk {
     this.eventHandlers = {};
   }
 
-  initialize({ bootstrapToken, iframeElement }: { bootstrapToken: string; iframeElement?: HTMLIFrameElement }): void {
+  initialize({
+    bootstrapToken,
+    config = {},
+    iframeElement
+  }: {
+    bootstrapToken: string;
+    iframeElement?: HTMLIFrameElement;
+    config?: Config;
+  }): void {
     if (this.isInitialized) {
       throw new Error('This TopperWebSdk instance was already initialized.');
     }
 
     this.isInitialized = true;
+    this.setConfig(config);
 
     const baseUrl = this.config.environment === Environments.SANDBOX ? Urls.SANDBOX : Urls.PRODUCTION;
     const isTopperSelfEmbed = window.location.href.includes(Urls.WEBSITE);
