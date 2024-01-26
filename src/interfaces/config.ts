@@ -6,5 +6,6 @@ export interface Config {
   is_android_app?: boolean;
   is_ios_app?: boolean;
   theme?: string;
+  use_assets?: boolean;
   variant?: Variants;
 }
