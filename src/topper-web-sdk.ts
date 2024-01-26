@@ -75,7 +75,7 @@ class TopperWebSdk {
     this.isInitialized = true;
 
     const baseUrl = this.config.environment === Environments.SANDBOX ? Urls.SANDBOX : Urls.PRODUCTION;
-    const isTopperSelfEmbed = window.location.href === Urls.WEBSITE;
+    const isTopperSelfEmbed = window.location.href.includes(Urls.WEBSITE);
 
     const queryParams = {
       bt: bootstrapToken,
