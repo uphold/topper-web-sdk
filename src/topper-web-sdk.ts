@@ -73,7 +73,7 @@ class TopperWebSdk {
 
   initialize({
     bootstrapToken,
-    config = {},
+    config,
     iframeElement
   }: {
     bootstrapToken: string;
@@ -85,7 +85,10 @@ class TopperWebSdk {
     }
 
     this.isInitialized = true;
-    this.setConfig(config);
+
+    if (config) {
+      this.setConfig(config);
+    }
 
     const baseUrl = this.config.environment === Environments.SANDBOX ? Urls.SANDBOX : Urls.PRODUCTION;
     const isTopperSelfEmbed = window.location.href.includes(Urls.WEBSITE);
