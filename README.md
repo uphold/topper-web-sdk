@@ -42,33 +42,33 @@ import { TOPPER_ENVIRONMENTS, TOPPER_VARIANTS, TopperWebSdk } from '@uphold/topp
 // Open in a new tab (default).
 const topper = new TopperWebSdk();
 
-topper.initialize({ bootstrapToken: 'XXXX' });
+topper.initialize({ bootstrapToken: <bootstrap token> });
 
 // Open in an iframe.
 const topper = new TopperWebSdk({ variant: TOPPER_VARIANTS.IFRAME });
 const topperIframe = document.getElementById('topper-iframe');
 
-topper.initialize({ bootstrapToken: 'XXXX', iframeElement: topperIframe });
+topper.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe });
 
 // Open in the same tab.
 const topper = new TopperWebSdk({ variant: TOPPER_VARIANTS.SAME_TAB });
 
-topper.initialize({ bootstrapToken: 'XXXX' });
+topper.initialize({ bootstrapToken: <bootstrap token> });
 
 // Open sandbox environment.
 const topper = new TopperWebSdk({ environment: TOPPER_ENVIRONMENTS.SANDBOX });
 
-topper.initialize({ bootstrapToken: 'XXXX' });
+topper.initialize({ bootstrapToken: <bootstrap token> });
 
 // Open with light theme.
 const topper = new TopperWebSdk({ theme: TOPPER_THEMES.LIGHT });
 
-topper.initialize({ bootstrapToken: 'XXXX' });
+topper.initialize({ bootstrapToken: <bootstrap token> });
 
 // Override initial config if needed.
 const topper = new TopperWebSdk();
 
-topper.initialize({ bootstrapToken: 'XXXX', config: { variant: TOPPER_VARIANTS.SAME_TAB } });
+topper.initialize({ bootstrapToken: <bootstrap token>, config: { variant: TOPPER_VARIANTS.SAME_TAB } });
 ```
 
 ### Event Handling
@@ -94,8 +94,8 @@ const topperIframe2 = new TopperWebSdk({ variant: TOPPER_VARIANTS.IFRAME });
 const topperIframe1Element = document.getElementById('topper-iframe-1');
 const topperIframe2Element = document.getElementById('topper-iframe-2');
 
-topperIframe1.initialize({ bootstrapToken: 'XXXX', iframeElement: topperIframe1Element });
-topperIframe2.initialize({ bootstrapToken: 'XXXX', iframeElement: topperIframe2Element });
+topperIframe1.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe1Element });
+topperIframe2.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe2Element });
 
 topperIframe1.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
 topperIframe2.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
@@ -110,10 +110,6 @@ Trigger events:
 ```javascript
 TopperWebSdk.triggerEvent(TOPPER_EVENTS.ORDER_PLACED, data);
 ```
-
-## Additional Information
-
-For more detailed information, refer to the official [documentation](https://docs.topperpay.com/web-sdk). This guide covers basic usage and setup.
 
 ## Issues
 
