@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.4.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.4.0) (2024-01-30)
+- Update readme [\#11](https://github.com/uphold/topper-web-sdk/pull/11) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+
 ## [v0.3.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.3.0) (2024-01-29)
 - Update docs [\#8](https://github.com/uphold/topper-web-sdk/pull/8) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 - Add files and update release workflow [\#10](https://github.com/uphold/topper-web-sdk/pull/10) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
