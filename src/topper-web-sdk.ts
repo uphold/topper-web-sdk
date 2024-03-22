@@ -96,6 +96,7 @@ class TopperWebSdk {
     const queryParams = {
       bt: bootstrapToken,
       ...(isTopperSelfEmbed && { embed: 1 }),
+      ...(this.config.locale && { locale: this.config.locale }),
       ...(this.config.theme && { theme: this.config.theme }),
       ...(this.config.is_android_app && { is_android_app: 1 }),
       ...(this.config.is_ios_app && { is_ios_app: 1 })

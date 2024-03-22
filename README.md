@@ -26,13 +26,14 @@ const topper = new TopperWebSdk();
 
 Where a `config` object can be passed to the constructor:
 
-| Property       | Default Value | Values                             |
-| -------------- | ------------- | ---------------------------------- |
-| environment    | `production`  | `production`, `sandbox`            |
-| is_android_app | `false`       | `true`, `false`                    |
-| is_ios_app     | `false`       | `true`, `false`                    |
-| theme          | `dark`        | `dark`, `light`                    |
-| variant        | `new-tab`     | `new-tab`, `same-tab`, `iframe`    |
+| Property       | Default Value | Values                          |
+| -------------- | ------------- | ------------------------------- |
+| environment    | `production`  | `production`, `sandbox`         |
+| is_android_app | `false`       | `true`, `false`                 |
+| is_ios_app     | `false`       | `true`, `false`                 |
+| locale         | `en`          | `en`, `en-US`, `pt`, `pt-BR`    |
+| theme          | `dark`        | `dark`, `light`                 |
+| variant        | `new-tab`     | `new-tab`, `same-tab`, `iframe` |
 
 ### Initiate Topper
 
@@ -59,6 +60,9 @@ topper.initialize({ bootstrapToken: <bootstrap token> });
 const topper = new TopperWebSdk({ environment: TOPPER_ENVIRONMENTS.SANDBOX });
 
 topper.initialize({ bootstrapToken: <bootstrap token> });
+
+// Open with specific locale.
+const topper = new TopperWebSdk({ locale: TOPPER_LOCALES.PT });
 
 // Open with light theme.
 const topper = new TopperWebSdk({ theme: TOPPER_THEMES.LIGHT });
