@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.5.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.5.0) (2024-05-15)
+- Add locale support [\#13](https://github.com/uphold/topper-web-sdk/pull/13) ([andre-geraldes](https://github.com/andre-geraldes))
+
 ## [v0.4.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.4.0) (2024-01-30)
 - Update readme [\#11](https://github.com/uphold/topper-web-sdk/pull/11) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 
