@@ -15,6 +15,7 @@ class TopperWebSdk {
 
   constructor(config: Config = {}) {
     this.config = {
+      active_flow: null,
       environment: Environments.PRODUCTION,
       is_android_app: false,
       is_ios_app: false,
@@ -73,10 +74,12 @@ class TopperWebSdk {
 
   initialize({
     bootstrapToken,
+    bootstrapTokens,
     config,
     iframeElement
   }: {
-    bootstrapToken: string;
+    bootstrapToken?: string;
+    bootstrapTokens?: string[];
     iframeElement?: HTMLIFrameElement;
     config?: Config;
   }): void {
@@ -91,10 +94,12 @@ class TopperWebSdk {
     }
 
     const baseUrl = this.config.environment === Environments.SANDBOX ? Urls.SANDBOX : Urls.PRODUCTION;
+    const bt = bootstrapTokens ? bootstrapTokens.join(';') : bootstrapToken;
     const isTopperSelfEmbed = window.location.href.includes(Urls.WEBSITE);
 
     const queryParams = {
-      bt: bootstrapToken,
+      bt,
+      ...(this.config.active_flow && { active_flow: this.config.active_flow }),
       ...(isTopperSelfEmbed && { embed: 1 }),
       ...(this.eventHandlers &&
         Object.keys(this.eventHandlers).length && { events: Object.keys(this.eventHandlers).join(',') }),
