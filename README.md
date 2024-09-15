@@ -79,13 +79,25 @@ topper.initialize({ bootstrapToken: <bootstrap token>, config: { variant: TOPPER
 
 Listen to single events like order placed or all events:
 
+Single event:
+
 ```javascript
-// Single event.
+const topper = new TopperWebSdk();
+
 topper.on(TOPPER_EVENTS.ORDER_PLACED, ({ data }) => {});
 
-// All events.
+topper.initialize({ bootstrapToken: <bootstrap token> });
+``` 
+
+All events:
+
+```javascript
+const topper = new TopperWebSdk();
+
 topper.on(TOPPER_EVENTS.ALL, ({ data, name }) => {});
-```
+
+topper.initialize({ bootstrapToken: <bootstrap token> });
+``` 
 
 ### Multiple instances
 
@@ -98,11 +110,11 @@ const topperIframe2 = new TopperWebSdk({ variant: TOPPER_VARIANTS.IFRAME });
 const topperIframe1Element = document.getElementById('topper-iframe-1');
 const topperIframe2Element = document.getElementById('topper-iframe-2');
 
-topperIframe1.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe1Element });
-topperIframe2.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe2Element });
-
 topperIframe1.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
 topperIframe2.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
+
+topperIframe1.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe1Element });
+topperIframe2.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe2Element });
 ```
 
 ### Triggering Events
