@@ -1,6 +1,6 @@
 {
   "name": "@uphold/topper-web-sdk",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Seamless integration of Topper on Web applications",
   "author": "Uphold",
   "license": "MIT",

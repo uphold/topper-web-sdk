@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.7.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.7.0) (2024-10-08)
+- Add offramp order wallet send event [\#17](https://github.com/uphold/topper-web-sdk/pull/17) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+
 ## [v0.6.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.6.0) (2024-10-08)
 - Do not require clean working dir on release-it [\#18](https://github.com/uphold/topper-web-sdk/pull/18) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 - Add order continue button clicked event and pass handled events [\#16](https://github.com/uphold/topper-web-sdk/pull/16) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
