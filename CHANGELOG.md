@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.6.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.6.0) (2024-10-08)
+- Do not require clean working dir on release-it [\#18](https://github.com/uphold/topper-web-sdk/pull/18) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+- Add order continue button clicked event and pass handled events [\#16](https://github.com/uphold/topper-web-sdk/pull/16) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+
 ## [v0.5.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.5.0) (2024-05-15)
 - Add locale support [\#13](https://github.com/uphold/topper-web-sdk/pull/13) ([andre-geraldes](https://github.com/andre-geraldes))
 
