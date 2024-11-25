@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.8.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.8.0) (2024-11-25)
+- Add support for multiple bts and active flow [\#15](https://github.com/uphold/topper-web-sdk/pull/15) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+
 ## [v0.7.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.7.0) (2024-10-08)
 - Add offramp order wallet send event [\#17](https://github.com/uphold/topper-web-sdk/pull/17) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 
