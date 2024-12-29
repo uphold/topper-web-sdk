@@ -1,5 +1,5 @@
 import { Config } from './interfaces';
-import { Environments, Events, Urls, Variants } from './enums';
+import { Environments, Events, Targets, Urls, Variants } from './enums';
 import { EventHandler } from 'types';
 import queryString from 'query-string';
 
@@ -25,20 +25,33 @@ class TopperWebSdk {
   }
 
   static triggerEvent(eventName: Events, data?: any): void {
-    const mainWindow = window.self !== window.top ? window.parent : window.opener;
+    const reactNativeWebviewTarget = window.ReactNativeWebView || window.parent?.ReactNativeWebView;
 
-    if (!mainWindow) {
+    const targets = [
+      ...(reactNativeWebviewTarget ? [{ type: Targets.REACT_NATIVE_WEBVIEW, value: reactNativeWebviewTarget }] : []),
+      ...(window.opener ? [{ type: Targets.WINDOW, value: window.opener }] : []),
+      ...(window.self !== window.top ? [{ type: Targets.WINDOW, value: window.parent }] : [])
+    ];
+
+    if (targets.length === 0) {
       return;
     }
 
-    mainWindow.postMessage(
-      {
-        name: eventName,
-        payload: data,
-        source: TOPPER_WEB_SDK_EVENT_SOURCE
-      },
-      '*'
-    );
+    const message = {
+      name: eventName,
+      payload: data,
+      source: TOPPER_WEB_SDK_EVENT_SOURCE
+    };
+
+    targets.forEach(target => {
+      if (target.type === Targets.REACT_NATIVE_WEBVIEW) {
+        target.value.postMessage(JSON.stringify(message));
+
+        return;
+      }
+
+      target.value.postMessage(message, '*');
+    });
   }
 
   private triggerEvent(name: Events, payload?: any): void {
