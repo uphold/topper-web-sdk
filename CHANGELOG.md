@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.9.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.9.0) (2025-01-10)
+- Add spanish locale [\#19](https://github.com/uphold/topper-web-sdk/pull/19) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
+
 ## [v0.8.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.8.0) (2024-11-25)
 - Add support for multiple bts and active flow [\#15](https://github.com/uphold/topper-web-sdk/pull/15) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 
