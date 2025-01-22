@@ -17,6 +17,7 @@ class TopperWebSdk {
     this.config = {
       active_flow: null,
       environment: Environments.PRODUCTION,
+      initial_screen: null,
       is_android_app: false,
       is_ios_app: false,
       variant: Variants.NEW_TAB,
@@ -105,6 +106,7 @@ class TopperWebSdk {
         Object.keys(this.eventHandlers).length && { events: Object.keys(this.eventHandlers).join(',') }),
       ...(this.config.is_android_app && { is_android_app: 1 }),
       ...(this.config.is_ios_app && { is_ios_app: 1 }),
+      ...(this.config.initial_screen && { initial_screen: this.config.initial_screen }),
       ...(this.config.locale && { locale: this.config.locale }),
       ...(this.config.theme && { theme: this.config.theme })
     };
