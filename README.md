@@ -29,9 +29,10 @@ Where a `config` object can be passed to the constructor:
 | Property       | Default Value | Values                                         |
 | -------------- | ------------- | ---------------------------------------------- |
 | environment    | `production`  | `production`, `sandbox`                        |
+| initial_screen |               | `authentication`                               |
 | is_android_app | `false`       | `true`, `false`                                |
 | is_ios_app     | `false`       | `true`, `false`                                |
-| locale         | `en`          | `en`, `en-US`, `pt`, `pt-BR`, 'es', `es-ES`    |
+| locale         | `en`          | `en`, `en-US`, `pt`, `pt-BR`, `es`, `es-ES`    |
 | theme          | `dark`        | `dark`, `light`                                |
 | variant        | `new-tab`     | `new-tab`, `same-tab`, `iframe`                |
 
