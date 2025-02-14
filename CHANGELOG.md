@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.10.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.10.0) (2025-02-14)
+- Add support for initial screen [\#24](https://github.com/uphold/topper-web-sdk/pull/24) ([JoaoOliveiraRocha](https://github.com/JoaoOliveiraRocha))
+
 ## [v0.9.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.9.0) (2025-01-10)
 - Add spanish locale [\#19](https://github.com/uphold/topper-web-sdk/pull/19) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 
