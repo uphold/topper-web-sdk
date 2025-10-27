@@ -10,7 +10,9 @@ export interface Config {
   environment?: Environments;
   initial_screen?: InitialScreens | null;
   is_android_app?: boolean;
+  is_android_webview?: boolean;
   is_ios_app?: boolean;
+  is_ios_webview?: boolean;
   locale?: Locales;
   theme?: Themes;
   variant?: Variants;
