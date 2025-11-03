@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.11.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.11.0) (2025-11-03)
+- Rename iOS and Android integration tags [\#25](https://github.com/uphold/topper-web-sdk/pull/25) ([JoaoOliveiraRocha](https://github.com/JoaoOliveiraRocha))
+
 ## [v0.10.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.10.0) (2025-02-14)
 - Add support for initial screen [\#24](https://github.com/uphold/topper-web-sdk/pull/24) ([JoaoOliveiraRocha](https://github.com/JoaoOliveiraRocha))
 
