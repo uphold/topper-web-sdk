@@ -3,24 +3,26 @@ name: Node CI
 on: [push]
 
 jobs:
-  unit:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [18, 20]
-    name: Node v${{ matrix.node }}
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup Node.js version
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: ${{ matrix.node }}
+        node-version: 24
+
+    - name: Enable yarn
+      run: corepack enable
 
     - name: Install dependencies
-      run: yarn
+      run: yarn install --frozen-lockfile
 
     - name: Run lint
       run: yarn lint
+
+    - name: Run build
+      run: yarn build
