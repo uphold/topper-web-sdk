@@ -18,6 +18,7 @@ module.exports = {
     ]
   },
   npm: {
-    publish: true
+    publish: true,
+    skipChecks: true
   }
 };
