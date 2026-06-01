@@ -1,5 +1,7 @@
 # Changelog
 
+## [v1.0.0](https://github.com/uphold/topper-web-sdk/releases/tag/v1.0.0) (2026-06-01)
+
 ## [v0.12.0](https://github.com/uphold/topper-web-sdk/releases/tag/v0.12.0) (2026-06-01)
 - Update workflows file extension [\#30](https://github.com/uphold/topper-web-sdk/pull/30) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
 - Update release workflow [\#29](https://github.com/uphold/topper-web-sdk/pull/29) ([andregoncalvesdev](https://github.com/andregoncalvesdev))
