@@ -26,15 +26,16 @@ const topper = new TopperWebSdk();
 
 Where a `config` object can be passed to the constructor:
 
-| Property           | Default Value | Values                                         |
-| ------------------ | ------------- | ---------------------------------------------- |
-| environment        | `production`  | `production`, `sandbox`                        |
-| initial_screen     |               | `authentication`                               |
-| is_android_webview | `false`       | `true`, `false`                                |
-| is_ios_webview     | `false`       | `true`, `false`                                |
-| locale             | `en`          | `en`, `en-US`, `pt`, `pt-BR`, `es`, `es-ES`    |
-| theme              | `dark`        | `dark`, `light`                                |
-| variant            | `new-tab`     | `new-tab`, `same-tab`, `iframe`                |
+| Property                  | Default Value | Values                                      |
+| ------------------------- | ------------- | ------------------------------------------- |
+| environment               | `production`  | `production`, `sandbox`                     |
+| initial_screen            |               | `authentication`                            |
+| is_android_webview        | `false`       | `true`, `false`                             |
+| is_ios_webview            | `false`       | `true`, `false`                             |
+| is_safari_view_controller | `false`       | `true`, `false`                             |
+| locale                    | `en`          | `en`, `en-US`, `pt`, `pt-BR`, `es`, `es-ES` |
+| theme                     | `dark`        | `dark`, `light`                             |
+| variant                   | `new-tab`     | `new-tab`, `same-tab`, `iframe`             |
 
 > [!IMPORTANT]  
 > The parameters `is_ios_app` and `is_android_app` have been **renamed** to `is_ios_webview` and `is_android_webview`.

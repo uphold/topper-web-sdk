@@ -13,6 +13,7 @@ export interface Config {
   is_android_webview?: boolean;
   is_ios_app?: boolean;
   is_ios_webview?: boolean;
+  is_safari_view_controller?: boolean;
   locale?: Locales;
   theme?: Themes;
   variant?: Variants;
