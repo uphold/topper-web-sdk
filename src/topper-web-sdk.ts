@@ -22,6 +22,7 @@ class TopperWebSdk {
       is_android_webview: false,
       is_ios_app: false,
       is_ios_webview: false,
+      is_safari_view_controller: false,
       variant: Variants.NEW_TAB,
       ...config
     };
@@ -158,6 +159,7 @@ class TopperWebSdk {
       ...(this.config.is_android_webview && { is_android_webview: 1 }),
       ...(this.config.is_ios_app && { is_ios_app: 1 }),
       ...(this.config.is_ios_webview && { is_ios_webview: 1 }),
+      ...(this.config.is_safari_view_controller && { is_safari_view_controller: 1 }),
       ...(this.config.initial_screen && { initial_screen: this.config.initial_screen }),
       ...(this.config.locale && { locale: this.config.locale }),
       ...(this.config.theme && { theme: this.config.theme })
