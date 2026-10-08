@@ -155,8 +155,8 @@ const topperIframe2 = new TopperWebSdk({ variant: TOPPER_VARIANTS.IFRAME });
 const topperIframe1Element = document.getElementById('topper-iframe-1');
 const topperIframe2Element = document.getElementById('topper-iframe-2');
 
-topperIframe1.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
-topperIframe2.on(TOPPER_WEB_SDK_EVENTS.ORDER_PLACED, ({ data }) => {});
+topperIframe1.on(TOPPER_EVENTS.ORDER_PLACED, ({ data }) => {});
+topperIframe2.on(TOPPER_EVENTS.ORDER_PLACED, ({ data }) => {});
 
 topperIframe1.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe1Element });
 topperIframe2.initialize({ bootstrapToken: <bootstrap token>, iframeElement: topperIframe2Element });
