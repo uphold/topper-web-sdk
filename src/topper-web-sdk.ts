@@ -1,6 +1,6 @@
 import { Config } from './interfaces';
 import { Environments, Events, Handlers, Sources, Urls, Variants } from './enums';
-import { EventHandler, Handler } from 'types';
+import { EventHandler, Handler } from './types';
 import { InternalEvents } from './enums/internal-events';
 import queryString from 'query-string';
 
@@ -35,36 +35,69 @@ class TopperWebSdk {
   static handle<T = any>(handlerName: Handlers, data?: any): Promise<T> {
     const mainWindow = this.getMainWindow();
 
+    // `window.opener` is `null` for a top-level navigation or any page reached without an
+    // opener. `triggerEvent()` already guards this case; dereferencing it here used to throw an
+    // uncaught `TypeError` and take down the caller.
+    if (!mainWindow) {
+      return Promise.reject(new Error('No parent/opener window is available to resolve the handler.'));
+    }
+
     mainWindow.postMessage(
       {
         name: InternalEvents.RESOLVE_HANDLER,
         payload: { data, handlerName },
         source: Sources.HANDLER
       },
+      // The response arrives on the same window, where the origin is verified
+      // against the Topper application origins before it is processed.
       '*'
     );
 
     return new Promise((resolve, reject) => {
       const handleResponse = (event: MessageEvent) => {
+        // Accept a resolution only from the Topper application window itself, so a malicious
+        // frame, the merchant page's other frames, or a window that navigated this tab cannot
+        // resolve or reject this promise. Verifying the message shape alone is not a boundary:
+        // the `RESOLVE_HANDLER` payload of `signAndBroadcastTransaction` is a signed transaction,
+        // so a forged resolution is a forged signature accepted downstream.
         if (
-          event.data.name === InternalEvents.RESOLVE_HANDLER &&
-          event.data.payload &&
-          event.data.source === Sources.HANDLER
+          !this.isTrustedTopperEvent(event) ||
+          event.data.name !== InternalEvents.RESOLVE_HANDLER ||
+          !event.data.payload ||
+          event.data.source !== Sources.HANDLER
         ) {
-          window.removeEventListener('message', handleResponse);
-
-          if (event.data.payload.error) {
-            reject(event.data.payload.error);
-
-            return;
-          }
-
-          resolve(event.data.payload);
+          return;
         }
+
+        window.removeEventListener('message', handleResponse);
+
+        if (event.data.payload.error) {
+          reject(event.data.payload.error);
+
+          return;
+        }
+
+        resolve(event.data.payload);
       };
 
       window.addEventListener('message', handleResponse);
     });
+  }
+
+  /**
+   * Report whether `event` was posted by a Topper application window.
+   *
+   * A message qualifies only when it comes from an allow-listed Topper origin *and* from the
+   * window this instance actually opened, mirroring the check the instance-level message listener
+   * performs. Message shape is deliberately not part of the decision: shape is attacker-controlled.
+   *
+   * @param {MessageEvent} event The `message` event to evaluate.
+   * @returns {boolean} `true` when the event originates from a trusted Topper window.
+   */
+  private static isTrustedTopperEvent(event: MessageEvent): boolean {
+    const allowedOrigins = [Urls.PRODUCTION, Urls.SANDBOX];
+
+    return allowedOrigins.includes(event.origin as Urls) && event.source === this.getMainWindow();
   }
 
   static triggerEvent(eventName: Events, data?: any): void {
@@ -80,6 +113,8 @@ class TopperWebSdk {
         payload: data,
         source: Sources.EVENT
       },
+      // Outbound by design: the Topper application validates the sender window
+      // and origin before processing this event.
       '*'
     );
   }
@@ -98,14 +133,21 @@ class TopperWebSdk {
     this.handleMessage = (event: MessageEvent) => {
       const allowedOrigins = [Urls.PRODUCTION, Urls.SANDBOX];
 
+      // Only accept messages from the Topper application window itself.
+      // This blocks malicious pages from impersonating Topper and driving the
+      // local handler or event flows with forged payloads.
       if (!allowedOrigins.includes(event.origin as Urls) || event.source !== this.targetWindow) {
         return;
       }
 
+      // Guard against malformed messages: only well-formed event payloads may
+      // reach the registered event handlers.
       if (event.data.name && event.data.source === Sources.EVENT) {
         this.triggerEvent(event.data.name as Events, event.data.payload);
       }
 
+      // Guard the handler-resolution path in the same way: a missing or
+      // malformed payload must not trigger an unregistered-handler lookup.
       if (
         event.data.name === InternalEvents.RESOLVE_HANDLER &&
         event.data.payload &&
@@ -175,7 +217,11 @@ class TopperWebSdk {
       iframeElement.src = url;
       this.targetWindow = iframeElement.contentWindow;
     } else if (this.config.variant === Variants.NEW_TAB) {
-      this.targetWindow = window.open(url, '_blank');
+      // `noopener` severs the back-reference to this page. Unlike `<a target="_blank">`, plain
+      // `window.open` is not implicitly `noopener`, so without this the Topper tab gets a live
+      // `window.opener` and can navigate the merchant page. The message channel stays alive
+      // because replies are validated by origin *and* by `event.source`.
+      this.targetWindow = window.open(url, '_blank', 'noopener');
     } else if (this.config.variant === Variants.SAME_TAB) {
       window.location.href = url;
 
@@ -217,6 +263,8 @@ class TopperWebSdk {
           payload: handlerResult,
           source: Sources.HANDLER
         },
+        // Replies go back to the Topper application window that issued the
+        // request; that window validates the sender before processing them.
         '*'
       );
     } catch (error) {
