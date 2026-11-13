@@ -37,11 +37,6 @@ Where a `config` object can be passed to the constructor:
 | theme                     | `dark`        | `dark`, `light`                             |
 | variant                   | `new-tab`     | `new-tab`, `same-tab`, `iframe`             |
 
-> [!IMPORTANT]  
-> The parameters `is_ios_app` and `is_android_app` have been **renamed** to `is_ios_webview` and `is_android_webview`.
-> The legacy parameters are still supported but **deprecated**.
-> Please migrate to the new parameter names to ensure compatibility in future major versions.
-
 ### Initiate Topper
 
 ```javascript
@@ -94,7 +89,7 @@ const topper = new TopperWebSdk();
 topper.on(TOPPER_EVENTS.ORDER_PLACED, ({ data }) => {});
 
 topper.initialize({ bootstrapToken: <bootstrap token> });
-``` 
+```
 
 All events:
 
